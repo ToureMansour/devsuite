@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Sun, Moon, Plus, Terminal, Coffee, Github, Star, Sparkles, Wand2 } from 'lucide-react';
+import { Plus, Terminal, Coffee, Github, Star, Sparkles, Wand2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { INITIAL_COMMANDS } from './core/data';
 import { Command, CATEGORIES, Category } from './core/types';
@@ -14,7 +14,6 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All' | 'Favorites'>('All');
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [aiResults, setAiResults] = useState<Command[]>([]);
   const [isAiLoading, setIsAiLoading] = useState(false);
@@ -28,11 +27,6 @@ export default function App() {
     const savedFavs = localStorage.getItem('devcommande_favorites');
     if (savedFavs) setFavorites(JSON.parse(savedFavs));
 
-    const theme = localStorage.getItem('devcommande_theme');
-    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setIsDarkMode(true);
-      document.body.classList.add('dark');
-    }
   }, []);
 
   // AI search logic when no local results
@@ -58,16 +52,6 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [searchQuery]);
 
-  // Update theme
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('dark');
-      localStorage.setItem('devcommande_theme', 'dark');
-    } else {
-      document.body.classList.remove('dark');
-      localStorage.setItem('devcommande_theme', 'light');
-    }
-  }, [isDarkMode]);
 
   // Filtering local logic
   const filteredLocalCommands = useMemo(() => {
@@ -173,14 +157,8 @@ export default function App() {
             </div>
           </nav>
 
-          {/* User & Theme */}
-          <div className="p-8 mt-auto border-t border-zinc-200 dark:border-border-dark flex items-center justify-between">
-            <button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-3 bg-zinc-100 dark:bg-card-dark border border-zinc-200 dark:border-border-dark rounded-full hover:scale-110 transition-transform"
-            >
-              {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+          {/* User */}
+          <div className="p-8 mt-auto border-t border-zinc-200 dark:border-border-dark">
           </div>
         </aside>
 
