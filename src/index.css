@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-brand: #00FF9C;
+  --color-brand-dark: #00d683;
+  --color-bg-dark: #080808;
+  --color-card-dark: #111111;
+  --color-border-dark: #222222;
+  --color-text-dim: #777777;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-50 text-zinc-900 transition-colors duration-300;
+    font-feature-settings: "ss01", "ss02", "cv01";
+  }
+  
+  body.dark {
+    background-color: var(--color-bg-dark);
+    color: #F8F8F8;
+  }
+  
+  ::selection {
+    @apply bg-brand text-black;
+  }
+}
+
+@layer components {
+  /* Visible Grid Layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    border-left: 1px solid var(--color-border-dark);
+    border-right: 1px solid var(--color-border-dark);
+    @apply max-w-[1600px] mx-auto min-h-screen;
+  }
+
+  .sidebar-container {
+    grid-column: span 3;
+    border-right: 1px solid var(--color-border-dark);
+    @apply flex flex-col;
+  }
+
+  .main-content-container {
+    grid-column: span 9;
+    @apply flex flex-col p-0;
+  }
+
+  /* Technical Details */
+  .tech-label {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim;
+  }
+
+  .tech-border {
+    @apply border-b border-zinc-200 dark:border-border-dark;
+  }
+
+  /* Interaction Feedback */
+  .hover-invert {
+    @apply transition-all duration-200;
+  }
+  .hover-invert:hover {
+    @apply bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900;
+  }
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border-dark);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand);
+}
