@@ -28,6 +28,12 @@
   ::selection {
     @apply bg-brand text-black;
   }
+
+  /* Ensure full width on all screens */
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
 }
 
 @layer components {
@@ -35,9 +41,8 @@
   .grid-container {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    border-left: 1px solid var(--color-border-dark);
-    border-right: 1px solid var(--color-border-dark);
-    @apply max-w-[1600px] mx-auto min-h-screen;
+    width: 100%;
+    min-height: 100vh;
   }
 
   .sidebar-container {
@@ -46,9 +51,72 @@
     @apply flex flex-col;
   }
 
+  .sidebar-container.hidden {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-container.visible {
+    transform: translateX(0);
+  }
+
   .main-content-container {
     grid-column: span 9;
     @apply flex flex-col p-0;
+  }
+
+  .main-content-container.expanded {
+    grid-column: span 12;
+  }
+
+  .main-content-container.compressed {
+    grid-column: span 9;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar-container {
+      grid-column: span 1;
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      z-index: 60;
+      border-right: 1px solid var(--color-border-dark);
+      transition: left 0.3s ease;
+    }
+
+    .sidebar-container.open {
+      left: 0;
+    }
+
+    .main-content-container {
+      grid-column: span 1;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sidebar-container {
+      width: 100%;
+      max-width: none;
+    }
+
+    /* Ensure proper spacing for floating buttons */
+    .fixed.bottom-4.left-4 {
+      bottom: 1rem !important;
+      left: 1rem !important;
+    }
+
+    .fixed.bottom-20.left-4 {
+      bottom: 5rem !important;
+      left: 1rem !important;
+    }
   }
 
   /* Technical Details */

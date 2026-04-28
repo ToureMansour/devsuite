@@ -8,7 +8,11 @@ interface Message {
   content: string;
 }
 
-export const ChatDrawer: React.FC = () => {
+interface ChatDrawerProps {
+  isSidebarOpen?: boolean;
+}
+
+export const ChatDrawer: React.FC<ChatDrawerProps> = ({ isSidebarOpen = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
@@ -47,16 +51,18 @@ export const ChatDrawer: React.FC = () => {
   return (
     <>
       {/* Trigger Button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-36 right-12 w-20 h-20 bg-zinc-900 dark:bg-zinc-100 text-brand dark:text-zinc-900 hover:scale-105 border border-zinc-200 dark:border-border-dark flex items-center justify-center transition-all z-40 group"
-      >
+      {(!isSidebarOpen || window.innerWidth >= 768) && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-20 left-4 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 lg:bottom-12 lg:right-12 lg:left-auto bg-zinc-900 dark:bg-zinc-100 text-brand dark:text-zinc-900 hover:scale-105 border border-zinc-200 dark:border-border-dark flex items-center justify-center transition-all z-40 group"
+        >
         <MessageSquare size={32} className="group-hover:rotate-12" />
         <span className="absolute -top-1 -right-1 flex h-4 w-4">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
           <span className="relative inline-flex rounded-full h-4 w-4 bg-brand"></span>
         </span>
-      </button>
+        </button>
+      )}
 
       {/* Drawer */}
       <AnimatePresence>

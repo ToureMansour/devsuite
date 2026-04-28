@@ -49,9 +49,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, suggestions }) =
   return (
     <div ref={containerRef} className="relative w-full z-10">
       <div className="relative group">
-        <div className="absolute left-8 top-1/2 -translate-y-1/2 flex items-center gap-2 tech-label pointer-events-none">
+        <div className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 flex items-center gap-2 tech-label pointer-events-none">
           <Search size={14} className="text-brand" />
-          <span className="opacity-40">SEARCH_IO /</span>
+          <span className="hidden sm:inline opacity-40">SEARCH_IO /</span>
         </div>
         <input
           type="text"
@@ -59,7 +59,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, suggestions }) =
           onChange={handleChange}
           onFocus={() => query.length > 0 && setShowSuggestions(true)}
           placeholder="ENTER_QUERY_FOR_ANALYSIS..."
-          className="w-full pl-44 pr-12 py-8 bg-transparent dark:text-white focus:outline-none text-xl font-bold tracking-tighter uppercase placeholder:opacity-20 transition-all"
+          className="w-full pl-12 sm:pl-44 pr-12 py-6 sm:py-8 bg-transparent text-zinc-900 dark:text-zinc-100 focus:outline-none text-lg sm:text-xl font-bold tracking-tighter uppercase placeholder:text-zinc-400 dark:placeholder:text-zinc-500 placeholder:opacity-60 transition-all"
           id="search-input"
         />
         <AnimatePresence>
@@ -69,7 +69,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, suggestions }) =
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={clearSearch}
-              className="absolute right-8 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-brand transition-colors"
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-brand transition-colors"
             >
               <X size={20} />
             </motion.button>
